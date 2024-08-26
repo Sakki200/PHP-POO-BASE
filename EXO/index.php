@@ -1,10 +1,14 @@
 <?php
 
 require_once('./Class/character.php');
+require_once('./Class/game.php');
 
-$character1 = new Character("Sakki", 15, 0, 50);
-$character2 = new Character("Hayasa", 12, 4, 37);
+$game = new Game;
+$gobelin1 = new Character('gobelin');
+$troll1 = new Character('troll');
 
-echo ($character1);
-$character2->attack($character1);
-echo ($character1);
+$game->addPlayer($gobelin1);
+$game->addPlayer($troll1);
+$game->player(0)->attack($troll1);
+$game->player(0)->attack($gobelin1);
+$game->player(0)->heal($troll1, 40);
