@@ -1,10 +1,18 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-
-    &__single {
-        display: flex;
-        flex-direction: column;
-    }
+form {
+  margin-bottom: 50px;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.grid__single {
+  display: flex;
+  flex-direction: column;
+}
+.grid__single img {
+  height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}/*# sourceMappingURL=style.css.map */

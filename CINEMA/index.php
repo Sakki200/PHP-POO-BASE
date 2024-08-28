@@ -1,37 +1,32 @@
 <?php
-
+// Recuperation des models
 require_once("./Models/Database.class.php");
-require_once("./Models/ClientResearch.class.php");
-require_once("./Models/MovieResearch.class.php");
+require_once("./Models/Film.class.php");
+require_once("./Models/Genre.class.php");
 
-$client = new Client;
-$movie = new Movie;
+// Recuperation du helper
+require_once("./helper.php");
 
-if (!empty($_GET['option']) || !empty($_GET['search'])) {
-    $option = $_GET['option'];
-    $search = $_GET['search'];
+// Logique de code
+$modelFilm = new Film;
+$modelGenre = new Genre;
 
-    switch ($option) {
-        case "0":
-            $movieResearch = $movie->getByName($search);;
-            break;
-        case "1":
-            $movieResearch = $movie->getByPublishDate($search);
-            break;
-        case "2":
-            $movieResearch = $movie->getByProdDate($search);
-            break;
-        case "3":
-            $movieResearch = $movie->getByGenre($search);
-            break;
-        case "4":
-            $clientResearch = $client->getByName($search);
-            break;
-        case "5":
-            $clientResearch = $client->getByFirstName($search);
-            break;
-    }
+if (!empty($_GET['search'])) {
+    $films = $modelFilm->getByName($_GET['search']);
+} elseif (!empty($_GET['genre'])) {
+    $films = $modelFilm->getByGenre($_GET['genre']);
+} elseif (!empty($_GET['date_proj'])) {
+    $films = $modelFilm->getByDateProj($_GET['date_proj']);
+} elseif (!empty($_GET['date_prod'])) {
+    $films = $modelFilm->getByDateProd($_GET['date_prod']);
 }
+else {
+    $page = $_GET['page'] ?? 1;
+    $films = $modelFilm->getAll($page);
+}
+$pages = $modelFilm->getPages(50);
+$genres = $modelGenre->getAll();
+$anneeProd = $modelFilm->getAnneeProd();
 
-
-require_once("./Views/home.php");
+// Inclusion du HTML
+include_once("./Views/home.php");
